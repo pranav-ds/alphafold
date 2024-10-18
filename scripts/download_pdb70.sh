@@ -34,8 +34,9 @@ ROOT_DIR="${DOWNLOAD_DIR}/pdb70"
 SOURCE_URL="http://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/old-releases/pdb70_from_mmcif_200401.tar.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}"
+cd "${DOWNLOAD_DIR}"
+mkdir "pdb70"
+aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 tar --extract --verbose --file="${ROOT_DIR}/${BASENAME}" \
   --directory="${ROOT_DIR}"
 rm "${ROOT_DIR}/${BASENAME}"

@@ -36,8 +36,9 @@ ROOT_DIR="${DOWNLOAD_DIR}/mgnify"
 SOURCE_URL="https://storage.googleapis.com/alphafold-databases/v2.3/mgy_clusters_2022_05.fa.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}"
+cd "${DOWNLOAD_DIR}"
+mkdir "mgnify"
+aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 pushd "${ROOT_DIR}"
 gunzip "${ROOT_DIR}/${BASENAME}"
 popd

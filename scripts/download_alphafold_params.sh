@@ -34,8 +34,9 @@ ROOT_DIR="${DOWNLOAD_DIR}/params"
 SOURCE_URL="https://storage.googleapis.com/alphafold/alphafold_params_2022-12-06.tar"
 BASENAME=$(basename "${SOURCE_URL}")
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}"
+cd "${DOWNLOAD_DIR}"
+mkdir "params"
+aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 tar --extract --verbose --file="${ROOT_DIR}/${BASENAME}" \
   --directory="${ROOT_DIR}" --preserve-permissions
 rm "${ROOT_DIR}/${BASENAME}"

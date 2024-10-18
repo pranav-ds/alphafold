@@ -34,8 +34,10 @@ ROOT_DIR="${DOWNLOAD_DIR}/uniref90"
 SOURCE_URL="https://ftp.ebi.ac.uk/pub/databases/uniprot/uniref/uniref90/uniref90.fasta.gz"
 BASENAME=$(basename "${SOURCE_URL}")
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}"
+cd "${DOWNLOAD_DIR}"
+mkdir "uniref90"
+
+aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 pushd "${ROOT_DIR}"
 gunzip "${ROOT_DIR}/${BASENAME}"
 popd

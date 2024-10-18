@@ -34,8 +34,9 @@ ROOT_DIR="${DOWNLOAD_DIR}/pdb_seqres"
 SOURCE_URL="https://files.wwpdb.org/pub/pdb/derived_data/pdb_seqres.txt"
 BASENAME=$(basename "${SOURCE_URL}")
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}"
+cd "${DOWNLOAD_DIR}"
+mkdir "pdb_seqres"
+aria2c "${SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 
 # Keep only protein sequences.
 grep --after-context=1 --no-group-separator '>.* mol:protein' "${ROOT_DIR}/pdb_seqres.txt" > "${ROOT_DIR}/pdb_seqres_filtered.txt"

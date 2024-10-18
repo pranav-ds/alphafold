@@ -41,9 +41,12 @@ SPROT_SOURCE_URL="https://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/kn
 SPROT_BASENAME=$(basename "${SPROT_SOURCE_URL}")
 SPROT_UNZIPPED_BASENAME="${SPROT_BASENAME%.gz}"
 
-mkdir --parents "${ROOT_DIR}"
-aria2c "${TREMBL_SOURCE_URL}" --dir="${ROOT_DIR}"
-aria2c "${SPROT_SOURCE_URL}" --dir="${ROOT_DIR}"
+
+cd "${DOWNLOAD_DIR}"
+mkdir "uniprot"
+
+aria2c "${TREMBL_SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
+aria2c "${SPROT_SOURCE_URL}" --dir="${ROOT_DIR}" --timeout=60 --retry-wait=30 --max-tries=100 --continue=true --split=10 --max-connection-per-server=5
 pushd "${ROOT_DIR}"
 gunzip "${ROOT_DIR}/${TREMBL_BASENAME}"
 gunzip "${ROOT_DIR}/${SPROT_BASENAME}"
