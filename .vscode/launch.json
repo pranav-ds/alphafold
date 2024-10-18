@@ -1,0 +1,61 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "bashdb",
+        "request": "launch",
+        "name": "Download All Data",
+        "program": "${workspaceFolder}/scripts/download_all_data.sh",
+        "args": ["/Volumes/Data/alphafold/downloads/"],
+        "env": {},
+        "cwd": "${workspaceFolder}"
+      },
+      {
+        "name": "Run AlphaFold",
+        "type": "python",
+        "python": "${workspaceFolder}/env/bin/python",
+        "request": "launch",
+        "program": "${workspaceFolder}/run_alphafold.py",
+        "console": "integratedTerminal",
+        "args": [
+          "--fasta_paths=${workspaceFolder}/tsts/query.fasta",
+          "--output_dir=${workspaceFolder}/output/",
+          "--model_preset=monomer",
+          "--data_dir=/Volumes/ProtienDB/alphafold/downloads/", 
+          "--uniref90_database_path=${workspaceFolder}/downloads/uniref90/uniref90.fasta",
+          "--mgnify_database_path=/Volumes/ProtienDB/alphafold/downloads/mgnify/",
+          "--template_mmcif_dir=/Volumes/ProtienDB/alphafold/downloads/pdb_mmcif/mmcif_files/",
+          "--obsolete_pdbs_path=/Volumes/ProtienDB/alphafold/downloads/pdb_mmcif/obsolete.dat",
+          "--max_template_date=2021-12-01",
+          "--db_preset=reduced_dbs",
+          "--use_gpu_relax=False",
+          "--small_bfd_database_path=${workspaceFolder}/downloads/small_bfd/",
+          "--pdb70_database_path=/Volumes/ProtienDB/alphafold/downloads/pdb70/pdb70",
+        ],
+        "env": {
+          "JAX_PLATFORM_NAME": "cpu",
+          "PATH": "${PATH}:${workspaceFolder}/local/bin"
+        }
+      },
+      {
+        "type": "lldb",
+        "request": "launch",
+        "name": "Debug HHSearch",
+        "program": "${workspaceFolder}/local/bin/hhsearch",
+        "args": [
+          "-cpu", "4",
+          "-i", "${workspaceFolder}/deps/hh-suite/data/query.a3m",
+          "-d", "${workspaceFolder}/downloads/scop70_1.75_hhsuite3/scop70_1.75",
+          "-o", "${workspaceFolder}/downloads/hhsearch_out.hhr",
+        ],
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PATH": "${workspaceFolder}/local/bin:${env:PATH}"
+        },
+        "stdio": [],
+        "externalConsole": false,
+        "preLaunchTask": "",
+        "postDebugTask": ""
+      }
+    ]
+  }
