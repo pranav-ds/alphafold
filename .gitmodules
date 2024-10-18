@@ -1,0 +1,9 @@
+[submodule "deps/hh-suite"]
+	path = deps/hh-suite
+	url = https://github.com/soedinglab/hh-suite.git
+[submodule "deps/pdbfixer"]
+	path = deps/pdbfixer
+	url = https://github.com/openmm/pdbfixer.git
+[submodule "deps/kalign"]
+	path = deps/kalign
+	url = https://github.com/TimoLassmann/kalign.git
