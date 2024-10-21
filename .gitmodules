@@ -7,3 +7,7 @@
 [submodule "deps/kalign"]
 	path = deps/kalign
 	url = https://github.com/TimoLassmann/kalign.git
+[submodule "deps/openmm"]
+	path = deps/openmm
+	url = https://github.com/openmm/openmm.git
+
