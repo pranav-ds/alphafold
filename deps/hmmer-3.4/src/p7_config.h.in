@@ -36,7 +36,7 @@
  *         it's used to set default options.
  */
 #ifndef p7_NCPU
-#define p7_NCPU  "2"
+#define p7_NCPU  "12"
 #endif
 
 /* p7_ALILENGTH controls length of displayed alignment lines.
