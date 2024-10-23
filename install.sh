@@ -79,7 +79,15 @@ install_hh_suite() {
   rm -rf build
   mkdir build
   cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${PROJ_DIR}/local -DCMAKE_BUILD_TYPE=Debug ..
+  export OMPLIBPATH="/opt/homebrew/Cellar/libomp/19.1.2/lib/libomp.dylib"
+  export CPPFLAGS="-I/opt/homebrew/Cellar/libomp/19.1.2/include"
+  cmake -DCMAKE_INSTALL_PREFIX=${PROJ_DIR}/local \
+        -DOpenMP_C_FLAGS=$CPPFLAGS \
+        -DOpenMP_C_LIB_NAMES="omp" \
+        -DOpenMP_CXX_FLAGS=$CPPFLAGS \
+        -DOpenMP_CXX_LIB_NAMES="omp" \
+        -DOpenMP_omp_LIBRARY=$OMPLIBPATH \
+        -DCMAKE_BUILD_TYPE=Release ..
   make -j "$NPROC"
   make install
   cd ${PROJ_DIR}
